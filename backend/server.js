@@ -46,6 +46,19 @@ app.get("/leaderboard", async (req, res) => {
   }
 })
 
+//GETTING WEAPONS
+app.get("/weapons", async (req, res) => {
+  try {
+    const [rows] = await pool.query(
+      "SELECT * FROM weapon"
+    )
+    res.json(rows)
+  } catch (err) {
+    console.error(err)
+    res.status(500).send("Erreur serveur")
+  }
+})
+
 //PATCH
 app.patch("/players/:id", async (req, res) => {
   try {
