@@ -33,6 +33,41 @@ app.get("/players", async (req, res) => {
   }
 })
 
+//LEADERBOARD
+app.get("/leaderboard", async (req, res) => {
+  try {
+    const [rows] = await pool.query(
+      "SELECT * FROM player ORDER BY victory_number DESC LIMIT 3"
+    )
+    res.json(rows)
+  } catch (err) {
+    console.error(err)
+    res.status(500).send("Erreur serveur")
+  }
+})
+
+//PATCH
+app.patch("/players/:id", async (req, res) => {
+  try {
+    const { id } = req.params
+    const { field, value } = req.body
+
+    const [result] = await pool.query(
+      `UPDATE player SET ${field} = ? WHERE id = ?`,
+      [value, id]
+    )
+
+    if (result.affectedRows === 0) {
+      return res.status(404).send("Joueur introuvable")
+    }
+
+    res.send(`${field} mis à jour`)
+  } catch (err) {
+    console.error(err)
+    res.status(500).send("Erreur serveur")
+  }
+})
+
 // READ (one)
 app.get("/players/:id", async (req, res) => {
   try {
