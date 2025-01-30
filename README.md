@@ -16,7 +16,7 @@ Pour démarrer ce projet, suivez les étapes ci-dessous :
    ```
 
    ```sql
-   USE turnbasedgame;
+   USE turnbasedgame_table;
 
    CREATE TABLE weapon (
        id INT AUTO_INCREMENT PRIMARY KEY,
