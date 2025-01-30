@@ -1,8 +1,10 @@
 const express = require("express")
+const cors = require("cors")
 const pool = require("./db")
 
 const app = express()
 app.use(express.json())
+app.use(cors())
 
 //CREATE
 app.post("/players", async (req, res) => {
@@ -49,9 +51,7 @@ app.get("/leaderboard", async (req, res) => {
 //GETTING WEAPONS
 app.get("/weapons", async (req, res) => {
   try {
-    const [rows] = await pool.query(
-      "SELECT * FROM weapon"
-    )
+    const [rows] = await pool.query("SELECT * FROM weapon")
     res.json(rows)
   } catch (err) {
     console.error(err)

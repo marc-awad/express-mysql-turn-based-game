@@ -7,6 +7,8 @@ body {
 #leaderboard,
 button {
   background-color: #534545;
+  border-radius: 2rem;
+  padding: 2rem;
 }
 h1{
     text-align: center;
