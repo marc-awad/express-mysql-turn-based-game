@@ -1,95 +1,74 @@
-# TP - MySQL
+# 🕹️ Turn-Based Game – MySQL Edition
 
-## Installation
+A simple turn-based battle game using Node.js and MySQL, featuring a weapon system, combat logic, and a dynamic leaderboard.
 
-Pour démarrer ce projet, suivez les étapes ci-dessous :
+## 🔧 Installation
 
-1. **Pré-requis** :
+Follow the steps below to get started:
 
-   - Assurez-vous d'avoir un client MySQL fonctionnel.
-   - Configurez vos informations de connexion MySQL (nom d'utilisateur, hôte, mot de passe) dans le fichier `db.js`.
+### 1. Prerequisites
+- Ensure you have MySQL installed and running.
+- Configure your MySQL credentials (`user`, `host`, `password`) in the `db.js` file.
 
-2. **Créer la base de données et les tables nécessaires dans votre base de données** :
+### 2. Database Setup
+Create the database and necessary tables:
+```sql
+CREATE DATABASE turnbasedgame;
+USE turnbasedgame;
 
-   ```sql
-   CREATE DATABASE turnbasedgame;
-   ```
+CREATE TABLE weapon (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL,
+    damage INT NOT NULL
+);
 
-   ```sql
-   USE turnbasedgame_table;
+CREATE TABLE player (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    hp INT NOT NULL,
+    weapon_id INT,
+    victory_number INT DEFAULT 0,
+    FOREIGN KEY (weapon_id) REFERENCES weapon(id)
+);
+```
 
-   CREATE TABLE weapon (
-       id INT AUTO_INCREMENT PRIMARY KEY,
-       name VARCHAR(255) UNIQUE NOT NULL,
-       damage INT NOT NULL
-   );
+### 3. Seed Initial Weapons
+```sql
+INSERT INTO weapon (name, damage) VALUES 
+('Sword', 25),
+('Bow', 15),
+('Axe', 30),
+('Dagger', 20),
+('Staff', 10);
+```
 
-   CREATE TABLE player (
-       id INT AUTO_INCREMENT PRIMARY KEY,
-       name VARCHAR(255) NOT NULL,
-       hp INT NOT NULL,
-       weapon_id INT,
-       victory_number INT DEFAULT 0,
-       FOREIGN KEY (weapon_id) REFERENCES weapon(id)
-   );
-   ```
+### 4. Install Dependencies
+```bash
+npm install
+```
 
-3. **Insertion des armes dans la table `weapon`** :
+### 5. Start the Server
+```bash
+npm start
+```
 
-   ```sql
-   INSERT INTO weapon (name, damage) VALUES ('Sword', 25);
-   INSERT INTO weapon (name, damage) VALUES ('Bow', 15);
-   INSERT INTO weapon (name, damage) VALUES ('Axe', 30);
-   INSERT INTO weapon (name, damage) VALUES ('Dagger', 20);
-   INSERT INTO weapon (name, damage) VALUES ('Staff', 10);
-   ```
+## 🎮 Game Features
 
-4. **Installation des dépendances** :
+### 🔫 Weapon Selection
+Players choose a weapon at the beginning, each with unique stats.
 
-   - Exécutez la commande suivante pour installer les dépendances nécessaires :
-     ```bash
-     npm i
-     ```
+### ♻️ Continuous Gameplay
+- After defeating a monster, a new one appears.
+- Players recover a fixed percentage of their HP after each victory.
 
-5. **Lancer le serveur** :
-   - Pour démarrer le serveur, utilisez :
-     ```bash
-     npm start
-     ```
+### 🏆 Leaderboard System
+Top 3 players ranked by number of monsters defeated.
 
-## Fonctionnalités du jeu
+## 🖥️ Front-End Interface
+- **Player Name Input**: Start the game by entering your name.
+- **Combat Area**: Displays player/monster HP and attack logs.
+- **Leaderboard**: Shows the top 3 highest scores.
 
-### Objectif
+---
 
-Améliorez votre jeu tour par tour avec une interface graphique et des fonctionnalités supplémentaires.
-
-### Fonctionnalités à implémenter :
-
-- **Choix d'arme** :
-
-  - Au début du jeu, le joueur choisit parmi plusieurs armes, chacune ayant des caractéristiques spécifiques.
-
-- **Continuation du jeu** :
-
-  - Si l'utilisateur gagne, un nouveau monstre apparaît.
-  - Le joueur récupère un pourcentage fixe (X%) de ses points de vie.
-
-- **Système de score** :
-  - Implémentez un système de leaderboard qui affiche un top 3 basé sur le nombre de monstres vaincus et le joueur associé.
-
-### Affichage Front-End :
-
-- **Leaderboard** :
-
-  - Un tableau affichant le top 3 des scores.
-
-- **Interface du jeu** :
-
-  - Un champ pour entrer le nom du joueur.
-  - Une section pour afficher le combat en cours.
-  - Un affichage du score actuel du joueur.
-
-- **Détails du combat** :
-  - Le nom du joueur et ses points de vie (PV).
-  - Le nom du monstre et ses PV.
-  - Les actions effectuées pendant le combat (attaques, dégâts, etc.).
+Made with ❤️ using Node.js, MySQL, HTML & CSS.
